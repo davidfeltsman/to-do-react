@@ -1,24 +1,36 @@
-import React from 'react'
-import { MdDelete } from 'react-icons/md';
+import React from 'react';
+import PropTypes from 'prop-types';
+import TodoItem from '../todo-item/TodoItem';
 
-const Task = () => {
+
+
+
+export default function List({ taskList, removeTask, completeTask }) {
+
   return (
-    <div className="list__task task">
-      <input type="checkbox" id="task1" className="task__check" />
-      <label htmlFor="task1" className="task__text">or, sit amet consectetur adipisicing elit. Obcaecati, laborum.</label>
-      <button className="task__deleteButton">
-        <MdDelete className="task__delete" />
-      </button>
-    </div>
+    <ul className="list">
+      {taskList.map(({ id, text, isCompleted }) => (
+        <TodoItem
+          id={id}
+          text={text}
+          isCompleted={isCompleted}
+          removeTask={removeTask}
+          completeTask={completeTask}
+          key={id}
+        />
+      ))}
+    </ul>
   )
 }
 
-export default function List() {
-  return (
-    <div className="list">
-      <Task />
-      <Task />
-      <Task />
-    </div>
-  )
+List.propTypes = {
+  taskList: PropTypes.array,
+  removeTask: PropTypes.func,
+  completeTask: PropTypes.func,
+}
+
+List.defaultProps = {
+  taskList: [],
+  removeTask: () => { },
+  completeTask: () => { },
 }
