@@ -1,0 +1,44 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  .task {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    &__check {
+      width: 20px;
+      height: 20px;
+      margin-right: 15px;
+    }
+    &__text {
+      flex: 1;
+      line-height: .9rem;
+    }
+    &__delete {
+      width: 100%;
+      height: 100%;
+      fill: $main-text-color;
+      
+    }
+    &__deleteButton {
+      padding: 0;
+      background: none;
+      width: 30px;
+      height: 30px;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      margin-right: 3px;
+      margin-left: 10px;
+      border-radius: 50%;
+      padding: 2px;
+      transition: box-shadow .2s ease-in-out;
+      &:focus {
+        box-shadow: 0 0 0 1px $main-text-color;
+      }
+    }
+  }
+}
