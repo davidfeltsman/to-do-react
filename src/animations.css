@@ -1,0 +1,29 @@
+.anim-enter {
+  opacity: 0;
+}
+.anim-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+.anim-exit {
+  opacity: 1;
+}
+.anim-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
+.lists-enter {
+  min-height: 0;
+}
+.lists-enter-active {
+  min-height: 300px;
+  transition: min-height 300ms ease-in;
+}
+.lists-exit {
+  min-height: 300px;
+}
+.lists-exit-active {
+  min-height: 0;
+  transition: min-height 300ms ease-in;
+}

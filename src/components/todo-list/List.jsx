@@ -1,25 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TodoItem from '../todo-item/TodoItem';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-
-
+import '../../animations.css';
 
 export default function List({ taskList, removeTask, completeTask }) {
-
   return (
-    <ul className="list">
+    <TransitionGroup className="list" component="ul">
       {taskList.map(({ id, text, isCompleted }) => (
-        <TodoItem
-          id={id}
-          text={text}
-          isCompleted={isCompleted}
-          removeTask={removeTask}
-          completeTask={completeTask}
+        <CSSTransition
           key={id}
-        />
+          timeout={300}
+          classNames="anim"
+        >
+          <TodoItem
+            id={id}
+            text={text}
+            isCompleted={isCompleted}
+            removeTask={removeTask}
+            completeTask={completeTask}
+          />
+        </CSSTransition>
       ))}
-    </ul>
+    </TransitionGroup>
   )
 }
 

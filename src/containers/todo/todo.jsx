@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { addTask, removeTask, completeTask, changeFilter } from '../../actions/actionCreator';
 
@@ -10,23 +11,19 @@ import List from '../../components/todo-list/List'
 
 function Todo(props) {
 
-  const [taskText, setTaskText] = useState('');
-  const handleInputChange = ({ target: { value } }) => {
+  function handleInputChange({ target: { value } }) {
     setTaskText(value);
   }
 
-  const { tasks, removeTask, completeTask, filter, changeFilter } = props;
-  const isTasksExist = tasks && tasks.length > 0;
-
-  const addTask = ({ key }) => {
+  function addTask({ key }) {
     if (taskText.length > 3 && key === 'Enter') {
       const { addTask } = props;
-      addTask((new Date).getTime(), taskText, false);
+      addTask((new Date()).getTime(), taskText, false);
       setTaskText('');
     }
   }
 
-  const filterTasks = (tasks, activeFilter) => {
+  function filterTasks(tasks, activeFilter) {
     switch (activeFilter) {
       case 'completed':
         return tasks.filter(task => task.isCompleted);
@@ -37,6 +34,10 @@ function Todo(props) {
     }
   }
 
+  const [taskText, setTaskText] = useState('');
+  const { tasks, removeTask, completeTask, filters, changeFilter } = props;
+  const isTasksExist = tasks && tasks.length > 0;
+  const filteredTasks = filterTasks(tasks, filters);
 
   return (
     <div className="todo-wrapper">
@@ -45,20 +46,29 @@ function Todo(props) {
         onChange={handleInputChange}
         onKeyPress={addTask}
       />
-      {isTasksExist && <List
-        taskList={tasks}
-        removeTask={removeTask}
-        completeTask={completeTask}
-      />}
-      {isTasksExist && <Footer
-        changeFilter={changeFilter}
-        activeFilter={filter}
-      />}
-    </div>
+      <TransitionGroup component={null}>
+        {isTasksExist && (
+          <CSSTransition timeout={300} classNames="lists">
+            <List
+              taskList={filteredTasks}
+              removeTask={removeTask}
+              completeTask={completeTask}
+            />
+          </CSSTransition>
+        )}
+        {isTasksExist && (
+          <CSSTransition classNames="anim" timeout={300}>
+            <Footer
+              changeFilter={changeFilter}
+              activeFilter={filters}
+            />
+          </CSSTransition>)}
+      </TransitionGroup>
+    </div >
   )
 }
 
-export default connect(({ tasks, filter }) => ({
+export default connect(({ tasks, filters }) => ({
   tasks,
-  filter,
+  filters,
 }), { addTask, removeTask, completeTask, changeFilter })(Todo);
