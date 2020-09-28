@@ -3,7 +3,7 @@ import { FaPlusCircle } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
 
-export default function Input({ taskText, onChange, onKeyPress }) {
+export default function Input({ taskText, onChange, onKeyPress, onButtonClick }) {
   return (
     <div className="input">
       <input
@@ -14,7 +14,7 @@ export default function Input({ taskText, onChange, onKeyPress }) {
         placeholder="Add task..."
         onKeyPress={onKeyPress}
       />
-      <button className="input__button" onClick={onKeyPress} >
+      <button className="input__button" onClick={onButtonClick} >
         <FaPlusCircle className="input__icon" />
       </button>
     </div>
@@ -24,11 +24,13 @@ export default function Input({ taskText, onChange, onKeyPress }) {
 Input.propTypes = {
   onChange: PropTypes.func,
   onKeyPress: PropTypes.func,
+  onButtonClick: PropTypes.func,
   value: PropTypes.string
 }
 
 Input.defaultProps = {
   onChange: () => { },
   onKeyPress: () => { },
+  onButtonClick: () => { },
   value: '',
 }

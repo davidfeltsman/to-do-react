@@ -1,3 +1,4 @@
+import { NewReleasesRounded } from '@material-ui/icons';
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -15,11 +16,21 @@ function Todo(props) {
     setTaskText(value);
   }
 
-  function addTask({ key }) {
+  function addTask() {
+    const { addTask } = props;
+    addTask((new Date()).getTime(), taskText, false);
+    setTaskText('');
+  }
+
+  function addTaskKeyHandler({ key }) {
     if (taskText.length > 3 && key === 'Enter') {
-      const { addTask } = props;
-      addTask((new Date()).getTime(), taskText, false);
-      setTaskText('');
+      addTask();
+    }
+  }
+
+  function addTaskButtonHandler() {
+    if (taskText.length > 3) {
+      addTask();
     }
   }
 
@@ -44,7 +55,8 @@ function Todo(props) {
       <Input
         taskText={taskText}
         onChange={handleInputChange}
-        onKeyPress={addTask}
+        onKeyPress={addTaskKeyHandler}
+        onButtonClick={addTaskButtonHandler}
       />
       <TransitionGroup component={null}>
         {isTasksExist && (
