@@ -11,4 +11,4 @@ const filter = (state = BASE_FILTER, { type, activeFilter }) => {
   }
 }
 
-export default filter;
+export default filter; 
